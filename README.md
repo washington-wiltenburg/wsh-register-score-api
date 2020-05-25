@@ -1,0 +1,1 @@
+# wsh-register-score-api
