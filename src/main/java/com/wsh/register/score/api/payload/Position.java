@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @Data
-@JsonPropertyOrder({ "score", "position"})
+@JsonPropertyOrder({"userId", "points", "position"})
 public class Position {
-
-    private Score score;
+    private Integer userId;
+    private Integer points;
     private Integer position;
 }

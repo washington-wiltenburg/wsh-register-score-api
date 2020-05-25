@@ -17,15 +17,17 @@ public class ScoreService {
 
     public void add(Score score) {
         Score s = map.get(score.getUserId());
-        if (s == null) map.put(score.getUserId(), score);
+        if (s == null) map.put(score.getUserId(), new Score()
+                .setUserId(score.getUserId())
+                .setPoints((score.getPoints() > 20000) ? 20000 : score.getPoints()));
         else update(score, findByUserIdPosition(score.getUserId()));
         findAllPositions().stream().forEach(System.out::println);
     }
 
-    public Position findByUserIdPosition(Integer userId) {
+    public Position findByUserIdPosition(int userId) {
         return findAllPositions().stream()
                 .filter(o ->
-                        o.getScore().getUserId().equals(userId))
+                        o.getUserId().equals(userId))
                 .findAny().orElseThrow(
                         () -> new ScoreNotFoundException("No records found for this userId: " + userId));
     }
@@ -35,7 +37,10 @@ public class ScoreService {
         map.entrySet().stream()
                 .sorted(sort(t -> t.getValue().getPoints(), true))
                 .forEach(i -> {
-                    lists.add(new Position().setScore(i.getValue()));
+                    lists.add(new Position()
+                            .setUserId(i.getValue().getUserId())
+                            .setPoints(i.getValue().getPoints())
+                            .setPosition(lists.size() + 1));
                 });
         return lists;
     }
@@ -48,8 +53,8 @@ public class ScoreService {
         return (o1, o2) -> attribute.apply(o1).compareTo(attribute.apply(o2));
     }
 
-    private Score update(Score score, Position result) {
-        int points = result.getScore().getPoints() + score.getPoints();
-        return result.getScore().setPoints((points > 20000) ? 20000 : points);
+    private Position update(Score score, Position result) {
+        int points = result.getPoints() + score.getPoints();
+        return result.setPoints((points > 20000) ? 20000 : points);
     }
 }
