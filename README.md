@@ -12,13 +12,13 @@
             Method: Post
             Payload Example: 
             { 
-            	"points" : 30050 , 
-            	"userId" : 2
+            	"points" : 100 , 
+            	"userId" : 1
             }
             
     - actual position:
         
-            http://localhost:8080/register-score/api/actual/position/10
+            http://localhost:8080/register-score/api/actual/position/1
             Method: Get
     
     - high lists
