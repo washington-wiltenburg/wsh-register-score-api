@@ -4,8 +4,9 @@
 
     http://localhost:8080/register-score/swagger-ui.html
 
-- Init API
+- Initialize API
     
+    - mvn spring-boot:run
     - create mock qtd to users in score API, endpoint: http://localhost:8080/register-score/api/create/random/{PARAM}
     - import json to Postman 
     
