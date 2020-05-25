@@ -17,11 +17,20 @@ public class ScoreService {
 
     public void add(Score score) {
         Score s = map.get(score.getUserId());
-        if (s == null) map.put(score.getUserId(), new Score()
-                .setUserId(score.getUserId())
-                .setPoints((score.getPoints() > 20000) ? 20000 : score.getPoints()));
+        if (s == null) map.put(score.getUserId(), validateLimitPoints(score));
         else update(score, findByUserIdPosition(score.getUserId()));
         findAllPositions().stream().forEach(System.out::println);
+    }
+
+    private Score validateLimitPoints(Score score) {
+        return new Score()
+                .setUserId(score.getUserId())
+                .setPoints((score.getPoints() > 20000) ? 20000 : score.getPoints());
+    }
+
+    private Position update(Score score, Position result) {
+        int points = result.getPoints() + score.getPoints();
+        return result.setPoints((points > 20000) ? 20000 : points);
     }
 
     public Position findByUserIdPosition(int userId) {
@@ -35,26 +44,21 @@ public class ScoreService {
     public List<Position> findAllPositions() {
         List<Position> lists = new ArrayList<>();
         map.entrySet().stream()
-                .sorted(sort(t -> t.getValue().getPoints(), true))
+                .sorted(sort(t -> t.getValue().getPoints()))
                 .forEach(i -> {
-                    lists.add(new Position()
-                            .setUserId(i.getValue().getUserId())
-                            .setPoints(i.getValue().getPoints())
-                            .setPosition(lists.size() + 1));
+                    addToPositionLists(lists, i);
                 });
         return lists;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    private <T> Comparator<T> sort(Function<T, ? extends Comparable> attribute, boolean descending) {
-        if (descending) {
-            return (o1, o2) -> attribute.apply(o2).compareTo(attribute.apply(o1));
-        }
-        return (o1, o2) -> attribute.apply(o1).compareTo(attribute.apply(o2));
+    private void addToPositionLists(List<Position> lists, Map.Entry<Integer, Score> i) {
+        lists.add(new Position()
+                .setUserId(i.getValue().getUserId())
+                .setPoints(i.getValue().getPoints())
+                .setPosition(lists.size() + 1));
     }
 
-    private Position update(Score score, Position result) {
-        int points = result.getPoints() + score.getPoints();
-        return result.setPoints((points > 20000) ? 20000 : points);
+    private <T> Comparator<T> sort(Function<T, ? extends Comparable> attribute) {
+        return (obj1, obj2) -> attribute.apply(obj2).compareTo(attribute.apply(obj1));
     }
 }
