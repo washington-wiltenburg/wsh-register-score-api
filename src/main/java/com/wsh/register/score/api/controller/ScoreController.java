@@ -37,4 +37,8 @@ public class ScoreController {
     public List<Position> highScoreList() {
         return service.findAllPositions();
     }
+
+    @ApiOperation(value = "Import Qtd Score With Param")
+    @GetMapping(value = "/import/{qtdScore}")
+    public List<Position> importUsersScore(@PathVariable("qtdScore") Integer qtdScore) { return service.importScorePoints(qtdScore); }
 }

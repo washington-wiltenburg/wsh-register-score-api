@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/register-score/api/create",
+			"name": "create-score",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -36,7 +36,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/register-score/api/actual/position/1",
+			"name": "actual-position",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -59,7 +59,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/register-score/api/high/lists",
+			"name": "hight-score-lists",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -87,6 +87,28 @@
 						"api",
 						"high",
 						"lists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "import-scores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/register-score/api/import/500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register-score",
+						"api",
+						"import",
+						"500"
 					]
 				}
 			},

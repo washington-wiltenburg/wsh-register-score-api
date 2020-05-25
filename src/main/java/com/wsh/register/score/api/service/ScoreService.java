@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 @Slf4j
@@ -14,6 +15,7 @@ import java.util.function.Function;
 public class ScoreService {
 
     static Map<Integer, Score> map = new HashMap<>();
+    final static AtomicInteger counter = new AtomicInteger();
 
     public void add(Score score) {
         Score s = map.get(score.getUserId());
@@ -60,5 +62,23 @@ public class ScoreService {
 
     private <T> Comparator<T> sort(Function<T, ? extends Comparable> attribute) {
         return (obj1, obj2) -> attribute.apply(obj2).compareTo(attribute.apply(obj1));
+    }
+
+    public List<Position> importScorePoints(int qtdScore) {
+        List<Score> lists = createMockScore(qtdScore);
+        lists.stream().forEach(i-> {
+            add(i);
+        });
+        return findAllPositions();
+    }
+
+    private List<Score> createMockScore(int qtd) {
+        List<Score> lists = new ArrayList<>();
+        for (int i=1; i<qtd; i++) {
+            lists.add(new Score()
+                    .setUserId(counter.incrementAndGet())
+                    .setPoints(counter.incrementAndGet()));
+        }
+        return lists;
     }
 }

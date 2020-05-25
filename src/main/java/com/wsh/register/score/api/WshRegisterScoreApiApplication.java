@@ -6,8 +6,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WshRegisterScoreApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WshRegisterScoreApiApplication.class, args);
-	}
-
+	public static void main(String[] args) { SpringApplication.run(WshRegisterScoreApiApplication.class, args); }
 }
