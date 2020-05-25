@@ -38,7 +38,7 @@ public class ScoreController {
         return service.findAllPositions();
     }
 
-    @ApiOperation(value = "Import Qtd Score With Param")
-    @GetMapping(value = "/import/{qtdScore}")
-    public List<Position> importUsersScore(@PathVariable("qtdScore") Integer qtdScore) { return service.importScorePoints(qtdScore); }
+    @ApiOperation(value = "Import Score With Param")
+    @PostMapping(value = "/create/random/{qtdScore}")
+    public List<Position> importScore(@PathVariable("qtdScore") Integer qtdScore) { return service.importScorePoints(qtdScore); }
 }

@@ -20,7 +20,7 @@ public class ScoreService {
     public void add(Score score) {
         Score s = map.get(score.getUserId());
         if (s == null) map.put(score.getUserId(), validateLimitPoints(score));
-        else update(score, findByUserIdPosition(score.getUserId()));
+        else update(score);
         findAllPositions().stream().forEach(System.out::println);
     }
 
@@ -30,9 +30,10 @@ public class ScoreService {
                 .setPoints((score.getPoints() > 20000) ? 20000 : score.getPoints());
     }
 
-    private Position update(Score score, Position result) {
-        int points = result.getPoints() + score.getPoints();
-        return result.setPoints((points > 20000) ? 20000 : points);
+    private Score update(Score score) {
+        Score scoreMap = map.get(score.getUserId());
+        int points = scoreMap.getPoints() + score.getPoints();
+        return scoreMap.setPoints((points > 20000) ? 20000 : points);
     }
 
     public Position findByUserIdPosition(int userId) {
@@ -48,16 +49,12 @@ public class ScoreService {
         map.entrySet().stream()
                 .sorted(sort(t -> t.getValue().getPoints()))
                 .forEach(i -> {
-                    addToPositionLists(lists, i);
+                    lists.add(new Position()
+                            .setUserId(i.getValue().getUserId())
+                            .setPoints(i.getValue().getPoints())
+                            .setPosition(lists.size() + 1));
                 });
         return lists;
-    }
-
-    private void addToPositionLists(List<Position> lists, Map.Entry<Integer, Score> i) {
-        lists.add(new Position()
-                .setUserId(i.getValue().getUserId())
-                .setPoints(i.getValue().getPoints())
-                .setPosition(lists.size() + 1));
     }
 
     private <T> Comparator<T> sort(Function<T, ? extends Comparable> attribute) {

@@ -3,10 +3,15 @@
 - Documentation API:
 
     http://localhost:8080/register-score/swagger-ui.html
+
+- Init API
+    
+    - create mock qtd to users in score API, endpoint: http://localhost:8080/register-score/api/create/random/{PARAM}
+    - import json to Postman 
     
 - Endpoints:
 
-    - create score: 
+    - create-score: 
     
             http://localhost:8080/register-score/api/create    
             Method: Post
@@ -16,15 +21,20 @@
             	"userId" : 1
             }
             
-    - actual position:
+    - actual-position:
         
             http://localhost:8080/register-score/api/actual/position/1
             Method: Get
     
-    - high lists
+    - high-score-lists
             
             http://localhost:8080/register-score/api/high/lists
             Method: Get
+            
+    - create-score-random
+    
+            http://localhost:8080/register-score/api/create/random/500
+            Method: Post        
                             
 - Postman
     

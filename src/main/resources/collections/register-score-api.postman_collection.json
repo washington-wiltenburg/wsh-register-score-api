@@ -95,10 +95,10 @@
 		{
 			"name": "import-scores",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/register-score/api/import/500",
+					"raw": "http://localhost:8080/register-score/api/create/random/500",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -107,7 +107,8 @@
 					"path": [
 						"register-score",
 						"api",
-						"import",
+						"create",
+						"random",
 						"500"
 					]
 				}
