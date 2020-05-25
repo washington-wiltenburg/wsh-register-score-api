@@ -2,7 +2,6 @@ package com.wsh.register.score.api.controller;
 
 import com.wsh.register.score.api.payload.Position;
 import com.wsh.register.score.api.payload.Score;
-import com.wsh.register.score.api.payload.ScoreList;
 import com.wsh.register.score.api.service.ScoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,27 +14,27 @@ import java.util.List;
 @Api(tags = "ScoreEndpoint")
 @Slf4j
 @RestController
-@RequestMapping("/api/score")
+@RequestMapping("/api")
 public class ScoreController {
 
     @Autowired
     private ScoreService service;
 
     @ApiOperation(value = "Create new score")
-    @PostMapping
-    public void createScore(@RequestBody Score payload) {
-        log.info("-- created score --");
+    @PostMapping(value = "/create")
+    public void create(@RequestBody Score payload) {
+        service.add(payload);
     }
 
     @ApiOperation(value = "Actual Position")
-    @GetMapping(value = "/userId")
+    @GetMapping(value = "/actual/position/{userId}")
     public Position position(@PathVariable("userId") Integer userId) {
-        return null;
+        return service.findByUserIdPosition(userId);
     }
 
     @ApiOperation(value = "High Score List")
-    @GetMapping
-    public List<ScoreList> highScoreList() {
-        return null;
+    @GetMapping(value = "/high/lists")
+    public List<Position> highScoreList() {
+        return service.findAllPositions();
     }
 }
